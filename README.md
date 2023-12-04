@@ -1,6 +1,6 @@
 # 测试项目
 
--   项目文件结构
+## 项目文件结构
 
 ```bash
 .
@@ -42,7 +42,7 @@
 └── tsconfig.json # 项目 TS 配置文件
 ```
 
--   Webpack 优化
+## Webpack 优化
 
 ```JS
 /**
@@ -133,3 +133,33 @@
  * @优化渲染速度 使用 MiniCssExtractPlugin 拆分 css，修正页面资源加载顺序，提升页面渲染速度
  */
 ```
+
+## webpack 构建流程
+
+1. `setup` 参数合并：将通过 CLI 或者 Node API 传递的所有选项合并
+2. `setup context` 创建执行上下文环境
+3. `setup compile` 执行 Compiler 模块，使用 Compilation 模块创建 compilation 实例对象
+    - `Compiler:`
+    - Compiler 模块是 webpack 的主要引擎，它通过参数创建出一个 compilation 实例。
+    - Compiler 模块扩展（extends）自 Tapable 类，提供了生命周期钩子，用来`注册和调用插件`。
+    - 大多数面向用户的插件会首先在 Compiler 上注册。
+    - `Compilation:`
+    - Compilation 模块会被 Compiler 用来创建新的 compilation 对象（或新的 build 对象）。
+    - compilation 实例能够访问所有的模块和它们的依赖（大部分是循环依赖）。
+    - 它会对应用程序的依赖图中所有模块，进行字面上的编译(literal compilation)。
+    - 在编译阶段，模块会被`加载(load)`、`封存(seal)`、`优化(optimize)`、`分块(chunk)`、`哈希(hash)`和`重新创建(restore)`。
+    - Compilation 模块扩展(extend)自 Tapable 类，提供了生命周期钩子。
+4. `setup compilation` 注册插件
+5. `building`: 从 Entry 入口发出，针对每个 Module 串行调用对应的 Loader 去翻译 Module 内容。
+6. `building finish`: 构建模块完成
+7. `sealing finish module graph`：构建模块之间的依赖图
+8. `sealing optimization`: 封装优化，每个模块通过生命周期钩子和插件都会被
+    - `加载(load)`、
+    - `封存(seal)`、
+    - `优化(optimize)`、
+    - `分块(chunk)`、
+    - `哈希(hash)`和
+    - `重新创建(restore)`。
+9. `emitting emit` 把各个 chunk 输出到结果文件
+10. `done plugins` 结束标识
+11. `cache store` 缓存处理

@@ -9,6 +9,7 @@ import CompressionPlugin from "compression-webpack-plugin";
 // import { EsbuildPlugin } from "esbuild-loader";
 import type { JsMinifyOptions as SwcOptions } from "@swc/core";
 import TerserPlugin from "terser-webpack-plugin";
+import * as webpack from "webpack";
 
 export default merge(common, {
     mode: "production",
@@ -107,6 +108,9 @@ export default merge(common, {
                     },
                 },
             ],
+        }),
+        new webpack.ProgressPlugin((percentage, message, ...args) => {
+            console.info(percentage, message, ...args);
         }),
     ],
 });
