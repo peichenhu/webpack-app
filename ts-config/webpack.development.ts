@@ -34,7 +34,7 @@ export default merge(common, {
         ],
     },
     /**
-     * @优化二次编译 使用 cache 持久化缓存
+     * @优化二次编译速度 配置 cache 持久化缓存
      * cache 会在开发 模式被设置成 type: 'memory' 而且在 生产 模式 中被禁用。
      */
     // cache: true,
@@ -46,6 +46,5 @@ export default merge(common, {
         // 默认 optimization.providedExports 会被启用。
         providedExports: true,
     },
-    plugins: [],
-    // stats: "minimal", // summary minimal normal detailed verbose
+    plugins: []
 });

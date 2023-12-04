@@ -5,8 +5,13 @@ import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"; // 引入分析�
 import { TimeAnalyticsPlugin } from "time-analytics-webpack-plugin";
 import { root } from "./webpack.base";
 import path from "path";
+/**
+ * @优化指标分析 使用 BundleAnalyzerPlugin 分析构建产物
+ * @优化指标分析 使用 TimeAnalyticsPlugin 分析编译时间
+ * 
+ * onlyReport 是否仅生成分析报告
+ */
 
-// onlyReport // 仅生成报告
 export default function (onlyReport = false) {
     const time = Date.now();
     const statsFile = path.resolve(root, `log/analyzer.${time}.stats.json`);

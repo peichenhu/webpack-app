@@ -1,5 +1,17 @@
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
+// import HelloWorld from "./components/HelloWorld.vue";
+import { defineAsyncComponent } from "vue";
+const HelloWorld = defineAsyncComponent(() => {
+    /**
+     * @优化页面加载 使用异步组件，拆分模块，避免页面初始化阻塞
+     * webpackChunkName: "[chunkname]"  拆分模块
+     * webpackPrefetch: true            预先获取
+     * webpackPreload: true             预先加载
+     */
+    return import(
+        /* webpackChunkName: "helloWorld" */ "./components/HelloWorld.vue"
+    );
+});
 </script>
 
 <template>

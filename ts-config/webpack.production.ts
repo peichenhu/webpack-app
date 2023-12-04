@@ -27,13 +27,16 @@ export default merge(common, {
         ],
     },
     optimization: {
-        // 告知 webpack 去辨识 package.json 中的 副作用 标记或规则，
-        // 以跳过那些当导出不被使用且被标记不包含副作用的模块。
+        /**
+         * @优化产物大小 配置 optimization.sideEffects 和 TreeShaking，减小产物大小
+         * 告知 webpack 去辨识 package.json 中的副作用标记或规则，
+         * 以跳过那些当导出不被使用且被标记不包含副作用的模块。
+         */
         sideEffects: true,
         splitChunks: {
             /**
-             * @优化 使用 cacheGroups 分隔变动少的模块 优化编译速度
-             * @优化 使用 splitChunks 分隔公共模块 优化编译速度
+             * @优化渲染速度 使用 splitChunks 分隔公共业务模块，优化编译速度
+             * @优化渲染速度 使用 splitChunks 分隔 node_modules 中变动少的模块，优化编译速度
              */
             cacheGroups: {
                 vendors: {
@@ -63,14 +66,14 @@ export default merge(common, {
              */
             new CssMinimizerPlugin({
                 /**
-                 * @优化打包速度 使用 parallel 多线程，优化压缩速度
+                 * @优化编译速度 使用 CssMinimizerPlugin parallel 多线程，优化压缩速度
                  */
                 parallel: true, // 并行压缩
             }),
             new TerserPlugin<SwcOptions>({
                 /**
-                 * @优化打包速度 使用 SWC 优化压缩速度
-                 * @优化打包速度 使用 多线程 优化压缩速度
+                 * @优化编译速度 使用 SWC 优化压缩速度
+                 * @优化编译速度 使用 TerserPlugin parallel 多线程 优化压缩速度
                  */
                 minify: TerserPlugin.swcMinify, // 将删除所有注释
                 // parallel: true, // 开启多线程压缩
@@ -82,6 +85,10 @@ export default merge(common, {
         ],
     },
     plugins: [
+        /**
+         * @优化渲染速度_优化产物大小 使用 CompressionPlugin 构建 Gzip 格式静态文件
+         * @优化渲染速度 使用 MiniCssExtractPlugin 拆分 css，修正页面资源加载顺序，提升页面渲染速度
+         */
         new CompressionPlugin({
             test: /\.(js|css)$/, // 只生成css,js压缩文件
         }),

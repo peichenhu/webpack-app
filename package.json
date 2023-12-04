@@ -4,8 +4,10 @@
     "version": "1.0.0",
     "author": "pch1024",
     "license": "ISC",
+	"packageManager": "pnpm@8.10.5",
     "sideEffects": true,
     "scripts": {
+		"preinstall": "npx only-allow pnpm",
         "dev": "webpack serve --config ./ts-config/webpack.development.ts",
         "build": "webpack --config ./ts-config/webpack.production.ts",
         "build:dev": "webpack --config ./ts-config/webpack.development.ts",

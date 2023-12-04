@@ -23,16 +23,19 @@ const config: Configuration = {
         publicPath: "/", // 打包后文件的公共前缀路径
     },
     externals: {
-        // 在打包时忽略配置的模块，从而加快打包速度。
-        // externals 中配置的模块会被 webpack 忽略。
-        // 在 externals 配置中的 key 是依赖的模块名字，value 是全局暴露出来的模块
+        /**
+         * @优化编译速度_优化产物大小 配置 externals 外部扩展，减少构建文件
+         * 在打包时忽略配置的模块，从而加快打包速度。
+         * externals 中配置的模块会被 webpack 忽略。
+         * 在 externals 配置中的 key 是依赖的模块名字，value 是全局暴露出来的模块
+         */
         ...externals,
     },
     resolve: {
         /**
-         * @优化编译速度 文件定向查找，定义文件后缀名，尽可能减少后缀尝试的可能性
-         * @优化编译速度 文件定向查找，定义文件别名，避免文件层级太深查找太慢
-         * @优化编译速度 文件定向查找，定义模块查找目录，使用绝对路径，只在给定目录中搜索
+         * @优化编译速度 文件定向查找，定义 alias 文件后缀名，尽可能减少后缀尝试的可能性
+         * @优化编译速度 文件定向查找，定义 extensions 文件别名，避免文件层级太深查找太慢
+         * @优化编译速度 文件定向查找，定义 modules 模块查找目录，使用绝对路径，只在给定目录中搜索
          */
         modules: [path.resolve(root, "src"), "node_modules"],
         extensions: [".vue", ".ts", ".js", ".json"],
@@ -42,17 +45,17 @@ const config: Configuration = {
     },
     module: {
         /**
-         * @优化 noParse 对完全不需要解析的库进行忽略
+         * @优化编译速度 配置 module.noParse 对完全不需要解析的库进行忽略
          * 忽略的文件中 不应该含有 import, require, define 的调用，或任何其他导入机制。
          * 忽略大型的 library 可以提高构建性能。
          */
         noParse: /jquery/,
         rules: [
             /**
-             * @优化 尝试 thread-loader 支持 Loader 多线程
-             * @优化 尝试 babel-loader 替换 ts-loader
-             * @优化 使用 esbuild-loader 替换 babel-loader
-             * @优化 使用 exclude/include  缩小 Loader 解析范围
+             * @优化编译速度 尝试 thread-loader 支持 Loader 多线程
+             * @优化编译速度 尝试 babel-loader 替换 ts-loader
+             * @优化编译速度 使用 esbuild-loader 替换 babel-loader
+             * @优化编译速度 使用 module.rule exclude/include  缩小 Loader 解析范围
              */
             {
                 test: /\.vue$/,
@@ -142,7 +145,7 @@ const config: Configuration = {
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
             /**
-             * @优化 使用 minify 压缩文件
+             * @优化产物大小 使用 HtmlWebpackPlugin minify 压缩 html 文件
              */
             title: "测试项目",
             minify: true,
@@ -156,7 +159,7 @@ const config: Configuration = {
         }),
         new webpack.DefinePlugin({
             /**
-             * @优化 配置 Vue3 环境变量支持 TreeShaking
+             * @优化产物大小 配置 Vue3 环境变量支持 TreeShaking
              *
              * __VUE_OPTIONS_API__ (enable/disable Options API support, default: true)
              * __VUE_PROD_DEVTOOLS__ (enable/disable devtools support in production, default: false)
