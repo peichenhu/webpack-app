@@ -1,0 +1,27 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <!-- 此处外部扩展 CSS/JS 文件 -->
+  {{each htmlWebpackPlugin.options.externals}}
+  {{set item = $value}}
+  <!-- JS 文件 -->
+  {{if item.type === 'js'}}
+  <script type="module" src="{{item.url}}"></script>
+  {{/if}}
+  <!-- CSS 文件 -->
+  {{if item.type === 'css'}}
+  <link rel="stylesheet" href="{{item.url}}">
+  {{/if}}
+  {{/each}}
+  <!-- 此处内部注入文件 -->
+</head>
+
+<body>
+  <!-- Vue 根实例容器 -->
+  <div id="app"></div>
+</body>
+
+</html>
