@@ -52,6 +52,7 @@
 
 /**
  * @优化页面加载 使用异步组件，拆分模块，避免页面初始化阻塞
+ * 
  * webpackChunkName: "[chunkname]"  拆分模块
  * webpackPrefetch: true            预先获取
  * webpackPreload: true             预先加载
@@ -59,19 +60,21 @@
 
 /**
  * @优化编译速度_优化产物大小 配置 externals 外部扩展，减少构建文件
+ * 
  * 在打包时忽略配置的模块，从而加快打包速度。
  * externals 中配置的模块会被 webpack 忽略。
  * 在 externals 配置中的 key 是依赖的模块名字，value 是全局暴露出来的模块
  */
 
 /**
- * @优化编译速度 文件定向查找，定义 alias 文件后缀名，尽可能减少后缀尝试的可能性
- * @优化编译速度 文件定向查找，定义 extensions 文件别名，避免文件层级太深查找太慢
- * @优化编译速度 文件定向查找，定义 modules 模块查找目录，使用绝对路径，只在给定目录中搜索
+ * @优化编译速度 文件定向查找，定义 resolve.alias 文件后缀名，尽可能减少后缀尝试的可能性
+ * @优化编译速度 文件定向查找，定义 resolve.extensions 文件别名，避免文件层级太深查找太慢
+ * @优化编译速度 文件定向查找，定义 resolve.modules 模块查找目录，使用绝对路径，只在给定目录中搜索
  */
 
 /**
  * @优化编译速度 配置 module.noParse 对完全不需要解析的库进行忽略
+ * 
  * 忽略的文件中 不应该含有 import, require, define 的调用，或任何其他导入机制。
  * 忽略大型的 library 可以提高构建性能。
  */
@@ -99,11 +102,13 @@
 
 /**
  * @优化二次编译速度 配置 cache 持久化缓存
+ * 
  * cache 会在开发 模式被设置成 type: 'memory' 而且在 生产 模式 中被禁用。
  */
 
 /**
  * @优化产物大小 配置 optimization.sideEffects 和 TreeShaking，减小产物大小
+ * 
  * 告知 webpack 去辨识 package.json 中的副作用标记或规则，
  * 以跳过那些当导出不被使用且被标记不包含副作用的模块。
  */
