@@ -54,7 +54,8 @@ const config: Configuration = {
             /**
              * @优化编译速度 尝试 thread-loader 支持 Loader 多线程
              * @优化编译速度 尝试 babel-loader 替换 ts-loader
-             * @优化编译速度 使用 esbuild-loader 替换 babel-loader
+             * @优化编译速度 尝试 esbuild-loader 替换 babel-loader
+             * @优化编译速度 使用 swc-loader 替换 esbuild-loader
              * @优化编译速度 使用 module.rule exclude/include  缩小 Loader 解析范围
              */
             {
@@ -67,21 +68,34 @@ const config: Configuration = {
                 ],
             },
             {
-                test: /\.[jt]sx?$/,
+                test: /\.ts$/,
                 include: [path.resolve(root, "src")],
                 // exclude: [],
                 use: [
                     // "thread-loader",
                     {
-                        loader: "esbuild-loader",
+                        loader: "swc-loader",
                         options: {
-                            loader: "ts", // 设置使用 TS 程序加载 vue 扩展
-                            target: "ES2020", // 设置 JS 产物的编译版本
+                            jsc: {
+                                parser: {
+                                    syntax: "typescript",
+                                },
+                            },
                         },
                     },
                 ],
             },
-
+            // 自定义 Loader，处理 "*.esm" 后缀名的文件, 将其转化为 js。
+            {
+                test: /\.esm$/,
+                include: [path.resolve(root, "src")],
+                // exclude: [/node_modules/],
+                use: [
+                    {
+                        loader: path.resolve(root, "ts-loader/esm-loader.ts"),
+                    },
+                ],
+            },
             {
                 test: /\.art$/,
                 // include: [path.resolve(root, "src")],
@@ -104,7 +118,7 @@ const config: Configuration = {
                     },
                 },
                 generator: {
-                    filename: "static/images/[name].[contenthash:8][ext]", // 文件输出目录和命名
+                    filename: "static/images/[name].[contenthash][ext]", // 文件输出目录和命名
                 },
             },
             // 字体图标文件
@@ -120,7 +134,7 @@ const config: Configuration = {
                     },
                 },
                 generator: {
-                    filename: "static/fonts/[name].[contenthash:8][ext]", // 文件输出目录和命名
+                    filename: "static/fonts/[name].[contenthash][ext]", // 文件输出目录和命名
                 },
             },
             // 媒体文件
@@ -136,7 +150,7 @@ const config: Configuration = {
                     },
                 },
                 generator: {
-                    filename: "static/media/[name].[contenthash:8][ext]", // 文件输出目录和命名
+                    filename: "static/media/[name].[contenthash][ext]", // 文件输出目录和命名
                 },
             },
         ],

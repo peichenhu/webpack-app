@@ -1,0 +1,9 @@
+import test3 from "./test-3.esm";
+
+export default function test2(...args) {
+    /* ESM 测试块级注释 */
+    console.log("执行函数", test2.name);
+    console.log("执行参数", ...args);
+    test3(...args);
+    // ESM 测试行内注释
+}

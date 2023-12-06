@@ -1,0 +1,24 @@
+
+┌── time-analytics-webpack-plugin
+│ Webpack compile takes [33m[33m3140.4622 ms[39m[33m[39m
+├── [34m[1mPlugins[22m[39m
+│ Plugin [1mCssMinimizerPlugin[22m takes [32m[32m872.8534 ms[39m[32m[39m
+│ Plugin [1mTerserPlugin[22m takes [32m[32m230.8700 ms[39m[32m[39m
+│ Plugin [1mHtmlWebpackPlugin[22m takes [32m[32m163.9099 ms[39m[32m[39m
+│ Plugin [1mCopyPlugin[22m takes [32m[32m33.2852 ms[39m[32m[39m
+│ Plugin [1mCompressionPlugin[22m takes [32m[32m9.5062 ms[39m[32m[39m
+│ Plugin [1mDefinePlugin[22m takes [32m[32m3.6057 ms[39m[32m[39m
+│ Plugin [1mMiniCssExtractPlugin[22m takes [32m[32m2.3249 ms[39m[32m[39m
+│ Plugin [1mProgressPlugin[22m takes [32m[32m1.1224 ms[39m[32m[39m
+│ Plugin [1mPlugin[22m takes [32m[32m0.1498 ms[39m[32m[39m
+│ All plugins take [32m[32m1317.6276 ms[39m[32m[39m
+├── [34m[1mLoaders[22m[39m
+│ Loader [1mmini-css-extract-plugin[22m takes [32m[32m1058.3158 ms[39m[32m[39m
+│ Loader [1mswc-loader[22m takes [32m[32m73.9224 ms[39m[32m[39m
+│ Loader [1mvue-loader[22m takes [32m[32m48.6789 ms[39m[32m[39m
+│ Loader [1mart-template-loader[22m takes [32m[32m24.6201 ms[39m[32m[39m
+│ Loader [1mcss-loader[22m takes [32m[32m12.8350 ms[39m[32m[39m
+│ Loader [1m/Users/pch/Documents/GitHub/webpack-app/ts-loader/esm-loader.ts[22m takes [32m[32m11.9910 ms[39m[32m[39m
+│ Loader [1mvue-loader[22m takes [32m[32m0.8772 ms[39m[32m[39m
+│ There are many differnt loaders that have same assumed name. Consider use "loader.groupedByAbsolutePath" option to show the full path of loaders.
+│ All loaders take [32m[32m1231.2404 ms[39m[32m[39m

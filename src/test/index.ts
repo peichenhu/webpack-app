@@ -1,6 +1,7 @@
 import { join } from "lodash-es";
 import { getDate } from "./utils";
 import "./test-tree-shaking-file";
+import "./test-1.esm"
 
 function component() {
     // 创建元素

@@ -9,7 +9,6 @@ import CompressionPlugin from "compression-webpack-plugin";
 // import { EsbuildPlugin } from "esbuild-loader";
 import type { JsMinifyOptions as SwcOptions } from "@swc/core";
 import TerserPlugin from "terser-webpack-plugin";
-import * as webpack from "webpack";
 
 export default merge(common, {
     mode: "production",
@@ -69,7 +68,7 @@ export default merge(common, {
                 /**
                  * @优化编译速度 使用 CssMinimizerPlugin parallel 多线程，优化压缩速度
                  */
-                parallel: true, // 并行压缩
+                // parallel: true, // 并行压缩
             }),
             new TerserPlugin<SwcOptions>({
                 /**
@@ -94,7 +93,9 @@ export default merge(common, {
             test: /\.(js|css)$/, // 只生成css,js压缩文件
         }),
         new MiniCssExtractPlugin({
-            filename: "static/css/[name].[contenthash:8].css", // 抽离css的输出目录和名称
+            filename: "static/css/[name].[contenthash].css", // 抽离 css 的输出目录和名称
+            chunkFilename: "static/css/[id].[contenthash].css",
+            experimentalUseImportModule: true,
         }),
         new Copy({
             patterns: [
@@ -108,9 +109,6 @@ export default merge(common, {
                     },
                 },
             ],
-        }),
-        new webpack.ProgressPlugin((percentage, message, ...args) => {
-            console.info(percentage, message, ...args);
         }),
     ],
 });

@@ -1,0 +1,6 @@
+export default function test3(...args) {
+    /* ESM 测试块级注释 */
+    console.log("执行函数", test3.name);
+    console.log("执行参数", ...args);
+    // ESM 测试行内注释
+}
