@@ -10,6 +10,7 @@ export const root = path.resolve(__dirname, "../");
 const { externals, externalList } = createExternals();
 
 const config: Configuration = {
+    target: "web",
     context: path.resolve(root, "src"),
     entry: {
         main: "./main.ts",
@@ -21,6 +22,8 @@ const config: Configuration = {
         filename: "static/js/[name].[chunkhash:8].js", // 每个输出js的名称
         // assetModuleFilename: "assets/[name][ext][query]",
         publicPath: "/", // 打包后文件的公共前缀路径
+        crossOriginLoading: "anonymous",
+        scriptType: "module",
     },
     externals: {
         /**
@@ -172,6 +175,9 @@ const config: Configuration = {
             scriptLoading: "module",
         }),
         new webpack.DefinePlugin({
+            // 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+            // "process.env.NODE_ENV": JSON.stringify("development"),
+            // "process.env.NODE_ENV": JSON.stringify("production"),
             /**
              * @优化产物大小 配置 Vue3 环境变量支持 TreeShaking
              *
@@ -186,6 +192,8 @@ const config: Configuration = {
         }),
     ],
     optimization: {
+        // nodeEnv: "production",
+        moduleIds: "size", // 模块 id 时需要使用哪种算法
         runtimeChunk: "single", // 设置多入口使用一个 runtimeChunk
     },
     stats: {
