@@ -21,6 +21,7 @@ export default function (params = false) {
     let lastProgress: string;
     const config = merge(productionConfig, {
         plugins: [
+            // 配置分析打包结果插件
             new BundleAnalyzerPlugin({
                 analyzerMode: onlyReport ? "disabled" : "server",
                 generateStatsFile: onlyReport,
@@ -30,8 +31,7 @@ export default function (params = false) {
                     entrypoints: false,
                     modules: false,
                 },
-            }), // 配置分析打包结果插件
-
+            }), 
             new webpack.ProgressPlugin((percentage, message, ...args) => {
                 let percent = (percentage * 100).toFixed(0);
                 let join = [
@@ -44,7 +44,7 @@ export default function (params = false) {
                 if (match) {
                     join = join.replace(match, g1);
                 }
-                if (lastProgress !== join) console.info(join);
+                // if (lastProgress !== join) console.info(join);
                 lastProgress = join;
             }),
         ],

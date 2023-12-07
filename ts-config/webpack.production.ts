@@ -5,6 +5,8 @@ import Copy from "copy-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import CompressionPlugin from "compression-webpack-plugin";
+import { browserslistToTargets } from "lightningcss";
+import browserslist from "browserslist";
 
 // import { EsbuildPlugin } from "esbuild-loader";
 import type { JsMinifyOptions as SwcOptions } from "@swc/core";
@@ -67,8 +69,14 @@ export default merge(common, {
             new CssMinimizerPlugin({
                 /**
                  * @优化编译速度 使用 CssMinimizerPlugin parallel 多线程，优化压缩速度
+                 * @优化编译速度 使用 CssMinimizerPlugin 借助 lightningcss，优化压缩速度
                  */
                 // parallel: true, // 并行压缩
+                minify: CssMinimizerPlugin.lightningCssMinify,
+                minimizerOptions: {
+                    // @ts-ignore
+                    targets: browserslistToTargets(browserslist(">= 0.25%")),
+                },
             }),
             new TerserPlugin<SwcOptions>({
                 /**
