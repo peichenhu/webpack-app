@@ -34,7 +34,11 @@ export default function (params = false) {
 
             new webpack.ProgressPlugin((percentage, message, ...args) => {
                 let percent = (percentage * 100).toFixed(0);
-                let join = [percent, message, ...args].join("  ");
+                let join = [
+                    percent.padEnd(3, `_`),
+                    message.padEnd(10, `_`),
+                    ...args,
+                ].join(`___`);
                 let reg = /\.\.\/node_modules\/*.+\/(.+-(plugin|loader)).+/;
                 let [match, g1] = join.match(reg) || [];
                 if (match) {
